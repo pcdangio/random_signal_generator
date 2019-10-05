@@ -1,3 +1,5 @@
+/// \file random_signal_generator.h
+/// \brief Defines the random_signal_generator class.
 #ifndef RANDOM_SIGNAL_GENERATOR_H
 #define RANDOM_SIGNAL_GENERATOR_H
 
@@ -5,9 +7,10 @@
 #include <vector>
 #include <string>
 
+/// \brief Includes all PCT software.
 namespace pcd
 {
-
+/// \brief A class for generating random signals.
 class random_signal_generator
 {
 public:
