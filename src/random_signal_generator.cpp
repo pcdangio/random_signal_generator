@@ -1,39 +1,15 @@
 #include "random_signal_generator.h"
+#include "impl.h"
 
 #include <random>
 
 using namespace pcd;
 
-class random_signal_generator::impl
-{
-private:
-    std::random_device random_device;
-    std::uniform_real_distribution<double> distribution_zero_one;
-    std::uniform_real_distribution<double> distribution_pm_one;
-    std::mt19937 random_generator = std::mt19937(random_device);
-
-public:
-    impl()
-    {
-        // Set up random distributions and generators.
-        distribution_zero_one = std::uniform_real_distribution<double>(0.0, 1.0);
-        distribution_pm_one = std::uniform_real_distribution<double>(-1.0, 1.0);
-    }
-    double random_zero_one()
-    {
-        return distribution_zero_one(random_generator);
-    }
-    double random_pm_one()
-    {
-        return distribution_pm_one(random_generator);
-    }
-};
-
 // CONSTRUCTORS
 random_signal_generator::random_signal_generator(uint32_t n_points, double desired_mean, double desired_standard_deviation)
 {
     // Set up pimpl.
-    random_signal_generator::pimpl = new impl();
+    random_signal_generator::pimpl = new random_signal_generator::impl();
 
     // Store given values.
     random_signal_generator::n_points = n_points;
