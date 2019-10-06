@@ -10,4 +10,7 @@ include_directories(include)
 add_library(pcd-random_signal_generator STATIC src/random_signal_generator.cpp src/impl.cpp)
 
 # Install library.
-install(TARGETS pcd-random_signal_generator DESTINATION lib)
+set_target_properties(pcd-random_signal_generator PROPERTIES PUBLIC_HEADER include/random_signal_generator.h)
+install(TARGETS pcd-random_signal_generator
+        ARCHIVE DESTINATION lib
+        PUBLIC_HEADER DESTINATION include/pcd)
