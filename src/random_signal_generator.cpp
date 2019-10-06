@@ -46,7 +46,7 @@ std::vector<double>& random_signal_generator::generate()
     std::vector<basis> bases;
     bases.reserve(random_signal_generator::n_bases);
     // Generate bases.
-    for(uint32_t b = 0; b < random_signal_generator::n_bases; b++)
+    for(uint8_t b = 0; b < random_signal_generator::n_bases; b++)
     {
         // Create new basis.
         basis new_basis;
@@ -59,4 +59,54 @@ std::vector<double>& random_signal_generator::generate()
         // Add basis to bases.
         bases.push_back(new_basis);
     }
+
+    // Create signal.
+    // Iterate over points.
+    // Preallocate values for speed.
+    std::vector<basis>::iterator basis;
+    double point = 0;
+    double t = 0;
+    double N = static_cast<double>(random_signal_generator::n_points);
+    double sum = 0;
+    double squared_sum = 0;
+    bool add_noise = std::abs(random_signal_generator::noise_percentage) > std::numeric_limits<double>::epsilon();
+    // Conduct iterations.
+    for(uint32_t n = 0; n < random_signal_generator::n_points; n++)
+    {
+        // Build up the point via superposition of the basis vectors.
+        // Initialize point.
+        point = 0;
+        // Calculate t as time in single period.
+        t = static_cast<double>(n) / N;
+        // Iterate over the bases.
+        for(basis = bases.begin(); basis != bases.end(); basis++)
+        {
+            point += basis->amplitude * std::sin(basis->phase_offset + basis->frequency*M_2_PI*t);
+        }
+        // Add noise to the point if specified noise percentage is not zero.
+        if(add_noise)
+        {
+            point += random_signal_generator::pimpl->random_pm_one() * random_signal_generator::noise_percentage * random_signal_generator::desired_standard_deviation;
+        }
+        // Add point to the vector.
+        signal.push_back(point);
+        // Add point to mean and standard deviation calculations.
+        sum += point;
+        squared_sum += point*point;
+    }
+
+    // Scale signal to desired mean and standard deviation.
+    // Calculate mean and standard deviation.
+    double mean = sum / N;
+    double standard_deviation = std::sqrt((squared_sum-2*mean*sum+N*mean*mean)/N);
+    // Calculate scale factor for standard deviation adjustment.
+    double stdev_scale = random_signal_generator::desired_standard_deviation / standard_deviation;
+    // Iterate over points to make adjustments.
+    for(auto point_it = signal.begin(); point_it != signal.end(); point_it++)
+    {
+        *point_it = (*point_it - mean) * stdev_scale + random_signal_generator::desired_mean;
+    }
+
+    // Return signal.
+    return signal;
 }
