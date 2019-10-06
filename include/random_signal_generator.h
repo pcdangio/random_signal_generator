@@ -44,8 +44,8 @@ public:
     // METHODS
 
     /// \brief Generates a new randomized signal with the currently set parameters.
-    /// \return A vector containing the generated signal.
-    std::vector<double>& generate();
+    /// \param signal A vector for storing the generated signal.
+    void generate(std::vector<double>& signal);
 
 private:
     class impl;

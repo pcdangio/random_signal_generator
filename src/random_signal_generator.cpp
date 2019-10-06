@@ -28,10 +28,10 @@ random_signal_generator::~random_signal_generator()
 }
 
 // METHODS
-std::vector<double>& random_signal_generator::generate()
+void random_signal_generator::generate(std::vector<double>& signal)
 {
-    // Create vector for signal.
-    std::vector<double> signal;
+    // Make sure the vector is empty.
+    signal.clear();
     // Reserve enough space for the amount of points.
     signal.reserve(random_signal_generator::n_points);
 
@@ -106,7 +106,4 @@ std::vector<double>& random_signal_generator::generate()
     {
         *point_it = (*point_it - mean) * stdev_scale + random_signal_generator::desired_mean;
     }
-
-    // Return signal.
-    return signal;
 }
