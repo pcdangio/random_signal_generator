@@ -11,6 +11,9 @@ add_library(pcd-random_signal_generator STATIC src/random_signal_generator.cpp s
 
 # Install library.
 set_target_properties(pcd-random_signal_generator PROPERTIES PUBLIC_HEADER include/random_signal_generator.h)
-install(TARGETS pcd-random_signal_generator
+install(TARGETS pcd-random_signal_generator EXPORT pcd-random_signal_generatorConfig
         ARCHIVE DESTINATION lib
         PUBLIC_HEADER DESTINATION include/pcd)
+
+# Install CMake config file.
+install(EXPORT pcd-random_signal_generatorConfig DESTINATION share/cmake/pcd-random_signal_generator)
