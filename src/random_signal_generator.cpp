@@ -14,7 +14,7 @@ random_signal_generator::random_signal_generator(uint32_t n_points, double desir
     // Store given values.
     random_signal_generator::n_points = n_points;
     random_signal_generator::desired_mean = desired_mean;
-    random_signal_generator::desired_standard_deviation;
+    random_signal_generator::desired_standard_deviation = desired_standard_deviation;
 
     // Set defaults for rest.
     random_signal_generator::n_bases = 50;
@@ -53,12 +53,12 @@ void random_signal_generator::generate(std::vector<double>& signal)
         // Get random frequency from 0 to max_frequency.
         new_basis.frequency = random_signal_generator::pimpl->random_zero_one() * random_signal_generator::max_frequency;
         // Get random phase offset from 0 to 2*PI.
-        new_basis.phase_offset = random_signal_generator::pimpl->random_zero_one() * M_2_PI;
+        new_basis.phase_offset = random_signal_generator::pimpl->random_zero_one() * 2.0 * M_PI;
         // Get random amplitude from 0 to 1/frequency.  This gives more power to lower frequencies.
-        new_basis.amplitude = random_signal_generator::pimpl->random_zero_one() * 1.0 / new_basis.frequency;
+        new_basis.amplitude = random_signal_generator::pimpl->random_zero_one() / new_basis.frequency;
         // Add basis to bases.
         bases.push_back(new_basis);
-    }
+        }
 
     // Create signal.
     // Iterate over points.
@@ -69,7 +69,6 @@ void random_signal_generator::generate(std::vector<double>& signal)
     double N = static_cast<double>(random_signal_generator::n_points);
     double sum = 0;
     double squared_sum = 0;
-    bool add_noise = std::abs(random_signal_generator::noise_percentage) > std::numeric_limits<double>::epsilon();
     // Conduct iterations.
     for(uint32_t n = 0; n < random_signal_generator::n_points; n++)
     {
@@ -77,16 +76,11 @@ void random_signal_generator::generate(std::vector<double>& signal)
         // Initialize point.
         point = 0;
         // Calculate t as time in single period.
-        t = static_cast<double>(n) / N;
+        t = static_cast<double>(n) / (N-1);
         // Iterate over the bases.
         for(basis = bases.begin(); basis != bases.end(); basis++)
         {
-            point += basis->amplitude * std::sin(basis->phase_offset + basis->frequency*M_2_PI*t);
-        }
-        // Add noise to the point if specified noise percentage is not zero.
-        if(add_noise)
-        {
-            point += random_signal_generator::pimpl->random_pm_one() * random_signal_generator::noise_percentage * random_signal_generator::desired_standard_deviation;
+            point += basis->amplitude * std::sin(basis->phase_offset + basis->frequency*2.0*M_PI*t);
         }
         // Add point to the vector.
         signal.push_back(point);
@@ -102,8 +96,14 @@ void random_signal_generator::generate(std::vector<double>& signal)
     // Calculate scale factor for standard deviation adjustment.
     double stdev_scale = random_signal_generator::desired_standard_deviation / standard_deviation;
     // Iterate over points to make adjustments.
+    bool add_noise = std::abs(random_signal_generator::noise_percentage) > std::numeric_limits<double>::epsilon();
     for(auto point_it = signal.begin(); point_it != signal.end(); point_it++)
     {
         *point_it = (*point_it - mean) * stdev_scale + random_signal_generator::desired_mean;
+        // Add noise to the point if specified noise percentage is not zero.
+        if(add_noise)
+        {
+            *point_it += random_signal_generator::pimpl->random_pm_one() * random_signal_generator::noise_percentage * random_signal_generator::desired_standard_deviation;
+        }
     }
 }
