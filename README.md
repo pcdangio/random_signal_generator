@@ -13,11 +13,20 @@ Randomly generated signals are useful data sets for testing and tuning algorithm
 **License:** [MIT](https://choosealicense.com/licenses/mit/)
 
 ## Table of Contents:
-1. [Installation](#installation): How to install the utility on your system.
-2. [Usage](#usage): How to use the library in your code.
-3. [How It Works](#howitworks): Explains how the random signals are generated.
+1. [Download](#download): Where to download the source code from.
+2. [Installation](#installation): How to install the utility on your system.
+3. [Usage](#usage): How to use the library in your code.
+4. [How It Works](#howitworks): Explains how the random signals are generated.
 
-## 1: Installation <a id="installation"></a>
+## 1: Download <a id="downlad"/>
+
+**Stable Release**: <https://github.com/pcdangio/random_signal_generator/releases/latest>
+
+**Latest Source**: <https://github.com/pcdangio/random_signal_generator/archive/master.zip>
+
+**GitHub Repository**: <https://github.com/pcdangio/random_signal_generator>
+
+## 2: Installation <a id="installation"></a>
 
 First, download the latest source code from [GitHub](https://github.com/pcdangio/random_signal_generator/releases).
 
@@ -37,11 +46,11 @@ This will build and install the library to the default CMAKE_INSTALL_PREFIX path
 
 You may change the install path by passing ```-DCMAKE_INSTALL_PREFIX "some_path"``` when calling cmake.
 
-## 2: Usage <a id="usage"></a>
+## 3: Usage <a id="usage"></a>
 
 This section will explain how to use the library within your project.
 
-### 2.1: Code
+### 3.1: Code
 
 The following example displays how to use the utility:
 
@@ -83,7 +92,7 @@ int main(int argc, char** argv)
 }
 ```
 
-### 2.2: Compiling
+### 3.2: Compiling
 
 The following example shows how to build your project on Linux and link it against the pcd-random_signal_generator static library:
 
@@ -98,7 +107,7 @@ add_executable(main main.cpp)
 target_link_libraries(main libpcd-random_signal_generator.a)
 ```
 
-## 3: How It Works <a id="howitworks"></a>
+## 4: How It Works <a id="howitworks"></a>
 
 This utility leverages Fourier Composition to generate random signals.
 
