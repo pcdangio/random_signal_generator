@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 
 # Define project.
-project(random_signal_generator)
+project(random_signal_generator
+        VERSION 1.0.0)
 
 # Set up includes.
 include_directories(include)
