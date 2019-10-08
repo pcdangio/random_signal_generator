@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 
-/// \brief Includes all PCT software.
+/// \brief Includes all PCD software.
 namespace pcd
 {
 /// \brief A class for generating random signals.
