@@ -8,6 +8,8 @@ Randomly generated signals are useful data sets for testing and tuning algorithm
 - Control Theory
 - Forecasting
 
+**License:** [MIT](https://choosealicense.com/licenses/mit/)
+
 ## Table of Contents:
 1. [Installation](#installation): How to install the utility on your system.
 2. [Usage](#usage): How to use the library in your code.
