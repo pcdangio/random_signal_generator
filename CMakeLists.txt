@@ -21,5 +21,9 @@ install(TARGETS pcd-random_signal_generator EXPORT pcd-random_signal_generatorCo
         ARCHIVE DESTINATION lib
         PUBLIC_HEADER DESTINATION include/pcd)
 
+# Install executable.
+install(TARGETS random_signal_generator
+        RUNTIME DESTINATION bin)
+
 # Install CMake config file.
 install(EXPORT pcd-random_signal_generatorConfig DESTINATION share/cmake/pcd-random_signal_generator)
