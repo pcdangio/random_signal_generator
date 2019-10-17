@@ -16,10 +16,11 @@ add_executable(random_signal_generator src/main.cpp)
 target_link_libraries(random_signal_generator pcd-random_signal_generator)
 
 # Install library.
-set_target_properties(pcd-random_signal_generator PROPERTIES PUBLIC_HEADER include/random_signal_generator.h)
 install(TARGETS pcd-random_signal_generator EXPORT pcd-random_signal_generatorConfig
-        ARCHIVE DESTINATION lib
-        PUBLIC_HEADER DESTINATION include/pcd)
+        ARCHIVE DESTINATION lib)
+# Install public headers.
+install(DIRECTORY include/
+        DESTINATION include/pcd)
 
 # Install executable.
 install(TARGETS random_signal_generator

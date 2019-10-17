@@ -1,4 +1,4 @@
-#include "random_signal_generator.h"
+#include "random_signal_generator/random_signal_generator.h"
 #include "impl.h"
 
 #include <random>
