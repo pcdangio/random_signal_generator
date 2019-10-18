@@ -3,7 +3,7 @@
 #ifndef IMPL_H
 #define IMPL_H
 
-#include "random_signal_generator/random_signal_generator.h"
+#include "pcd/random_signal_generator/random_signal_generator.h"
 
 #include <random>
 

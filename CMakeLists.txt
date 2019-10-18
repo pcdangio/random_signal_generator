@@ -20,7 +20,7 @@ install(TARGETS pcd-random_signal_generator EXPORT pcd-random_signal_generatorCo
         ARCHIVE DESTINATION lib)
 # Install public headers.
 install(DIRECTORY include/
-        DESTINATION include/pcd)
+        DESTINATION include)
 
 # Install executable.
 install(TARGETS random_signal_generator

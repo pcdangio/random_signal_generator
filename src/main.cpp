@@ -1,4 +1,4 @@
-#include "random_signal_generator/random_signal_generator.h"
+#include "pcd/random_signal_generator/random_signal_generator.h"
 
 #include "cxxopts.hpp"
 #include <fstream>
